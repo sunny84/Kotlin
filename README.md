@@ -63,3 +63,18 @@ HEAD:main 으로 안하고 HEAD:master 로 했더니 master에 합쳐진 파일�
 ```
 ### 많은 리포지토리는 정리되고 commit기록은 그대로 유지할 수 있습니다. 
 
+## 5. github default 브랜치명 변경
+1. 브랜치 이름을 변경할 저장소로 들어간 후에 Settings를 클릭합니다.
+2. Branches를 클릭한 후에 우측의 연필 아이콘을 클릭합니다.
+3. master을 입력하고 Rename branch 를 클릭합니다.
+만일 master 브랜치가 이미 있다면 2번에서 연필 아이콘 옆에 있는 화살표를 클릭하여 master로 변경합니다.
+4. github 화면의 저장소 정보가 master으로 바뀐 것을 확인 할 수 있습니다.
+local 에 저장소를 clone 한 경우 다음과 같이 기본 저장소 이름을 바꿔줘야 합니다.
+```
+    $ git branch -m main master
+    $ git fetch origin
+    $ git branch -u origin/master master
+```
+
+
+
