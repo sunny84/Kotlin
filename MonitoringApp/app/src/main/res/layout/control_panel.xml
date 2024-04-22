@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/channel"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000"
+    android:padding="10dp"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/channelTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="채널선택"
+                android:textColor="@android:color/white" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.2" />
+
+            <CheckBox
+                android:id="@+id/ch1_8CheckBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:buttonTint="#ffffff"
+                android:text="1CH ~ 8CH"
+                android:textColor="@android:color/white" />
+
+            <CheckBox
+                android:id="@+id/ch9_10CheckBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:buttonTint="#ffffff"
+                android:text="9CH ~ 10CH"
+                android:textColor="@android:color/white" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.2" />
+
+            <TextView
+                android:id="@+id/xAxisScaleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="X축 Scale(10s/p)"
+                android:textColor="@android:color/white" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.2" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <ImageButton
+                    android:id="@+id/imageButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/dash_circle" />
+
+                <TextView
+                    android:id="@+id/xAsisValueTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="10"
+                    android:textColor="@android:color/white" />
+
+                <!--    <EditText-->
+                <!--        android:id="@+id/editTextNumber"-->
+                <!--        android:layout_width="match_parent"-->
+                <!--        android:layout_height="wrap_content"-->
+                <!--        android:ems="10"-->
+                <!--        android:inputType="number"-->
+                <!--        android:textColor="@android:color/white" />-->
+
+                <ImageButton
+                    android:id="@+id/imageButton2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/plus_circle" />
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.2" />
+
+            <TextView
+                android:id="@+id/yAxisScaleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Y축 Scale"
+                android:textColor="@android:color/white" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.2" />
+
+            <!-- Other UI components (if any) -->
+
+            <!-- Dropdown Menu -->
+            <Spinner
+                android:id="@+id/yAxisScaleSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp" />
+
+            <TextView
+                android:id="@+id/frequencyFilterRangeTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="주파수 필터 범위"
+                android:textColor="@android:color/white" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.2" />
+
+            <!-- Other UI components (if any) -->
+
+            <!-- Dropdown Menu -->
+            <Spinner
+                android:id="@+id/frequencyFilterRangeSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:padding="10dp"
+    android:background="#000000"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/deviceInfoIcon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/star_fill"
+        android:contentDescription="Device Info"
+        android:background="@android:color/white"/>
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.2" />
+
+    <TextView
+        android:id="@+id/moduleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="모듈정보"
+        android:textColor="@android:color/white"/>
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.2" />
+
+    <TextView
+        android:id="@+id/scanTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SCAN-0001"
+        android:textColor="@android:color/white"/>
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.2" />
+
+    <TextView
+        android:id="@+id/firmwareTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="펌웨어버전"
+        android:textColor="@android:color/white"/>
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.2" />
+
+</LinearLayout>
