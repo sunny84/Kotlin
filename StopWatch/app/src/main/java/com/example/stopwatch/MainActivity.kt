@@ -75,12 +75,15 @@ fun Stopwatch() {
             modifier = Modifier.padding(50.dp)
         ) {
             Text(text = String.format("%02d", (time / 60000) % 60),
+                modifier = Modifier.alignByBaseline(),
                 fontSize = 64.sp,
                 fontWeight = FontWeight.Bold)
             Text(text = ":${String.format("%02d", (time / 1000) % 60)}",
+                modifier = Modifier.alignByBaseline(),
                 fontSize = 64.sp,
                 fontWeight = FontWeight.Bold)
             Text(text = ".${String.format("%02d", (time / 10) % 100)}",
+                modifier = Modifier.alignByBaseline(),
                 fontSize = 32.sp,
                 fontWeight = FontWeight.Bold)
         }
