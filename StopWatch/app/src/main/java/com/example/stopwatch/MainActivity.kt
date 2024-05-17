@@ -71,17 +71,18 @@ fun Stopwatch() {
         modifier = Modifier.padding(20.dp)
     ) {
         Row (
+            verticalAlignment = Alignment.Bottom,
             modifier = Modifier.padding(50.dp)
         ) {
             Text(text = String.format("%02d", (time / 60000) % 60),
-                fontSize = 32.sp,
-                fontWeight = FontWeight.Bold)     // Minutes
+                fontSize = 64.sp,
+                fontWeight = FontWeight.Bold)
             Text(text = ":${String.format("%02d", (time / 1000) % 60)}",
-                fontSize = 32.sp,
-                fontWeight = FontWeight.Bold) // Seconds
+                fontSize = 64.sp,
+                fontWeight = FontWeight.Bold)
             Text(text = ".${String.format("%02d", (time / 10) % 100)}",
                 fontSize = 32.sp,
-                fontWeight = FontWeight.Bold)  // Centiseconds
+                fontWeight = FontWeight.Bold)
         }
         Button(
             onClick = {
@@ -108,7 +109,6 @@ fun Stopwatch() {
             Text(if (isRunning) "중지" else "시작", fontSize = 20.sp)
         }
     }
-
 }
 
 @Preview(showBackground = true)
