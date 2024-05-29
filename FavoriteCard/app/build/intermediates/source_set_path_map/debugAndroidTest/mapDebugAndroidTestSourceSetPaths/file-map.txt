@@ -1,0 +1,35 @@
+com.example.myapplication.test.app-core-1.13.1-0 C:\Users\sonya\.gradle\caches\transforms-4\09b9d3569ccc188e80ed59b5beb48cbd\transformed\core-1.13.1\res
+com.example.myapplication.test.app-lifecycle-viewmodel-savedstate-2.8.0-1 C:\Users\sonya\.gradle\caches\transforms-4\0c20196415b4543990389a5a34dc2041\transformed\lifecycle-viewmodel-savedstate-2.8.0\res
+com.example.myapplication.test.app-profileinstaller-1.3.1-2 C:\Users\sonya\.gradle\caches\transforms-4\0d7a1072661ff103407b4356ab773fc6\transformed\profileinstaller-1.3.1\res
+com.example.myapplication.test.app-emoji2-1.4.0-3 C:\Users\sonya\.gradle\caches\transforms-4\1ba349b0033ca92af552a6101bf30120\transformed\emoji2-1.4.0\res
+com.example.myapplication.test.app-core-runtime-2.2.0-4 C:\Users\sonya\.gradle\caches\transforms-4\1f2389911a64e62032a0151be53d2e06\transformed\core-runtime-2.2.0\res
+com.example.myapplication.test.app-savedstate-ktx-1.2.1-5 C:\Users\sonya\.gradle\caches\transforms-4\290aa90e2a71b5f859c776a2ed0c901d\transformed\savedstate-ktx-1.2.1\res
+com.example.myapplication.test.app-ui-geometry-release-6 C:\Users\sonya\.gradle\caches\transforms-4\2ac9cfafb486e31ae039975957fe465d\transformed\ui-geometry-release\res
+com.example.myapplication.test.app-startup-runtime-1.1.1-7 C:\Users\sonya\.gradle\caches\transforms-4\2cb6028a61ffe2d33db9ce6fb6899bcb\transformed\startup-runtime-1.1.1\res
+com.example.myapplication.test.app-ui-test-junit4-release-8 C:\Users\sonya\.gradle\caches\transforms-4\37ce630e4e24c614ac8edae776996672\transformed\ui-test-junit4-release\res
+com.example.myapplication.test.app-ui-graphics-release-9 C:\Users\sonya\.gradle\caches\transforms-4\3c29b3df220d683bb70068a3619c3270\transformed\ui-graphics-release\res
+com.example.myapplication.test.app-core-ktx-1.13.1-10 C:\Users\sonya\.gradle\caches\transforms-4\4535c37fe8f3f89f0bd1d41a6ba17e50\transformed\core-ktx-1.13.1\res
+com.example.myapplication.test.app-activity-ktx-1.9.0-11 C:\Users\sonya\.gradle\caches\transforms-4\4b79d8e888549e95de22bd2025039976\transformed\activity-ktx-1.9.0\res
+com.example.myapplication.test.app-ui-unit-release-12 C:\Users\sonya\.gradle\caches\transforms-4\595f58504837e66c71c21e31d101d726\transformed\ui-unit-release\res
+com.example.myapplication.test.app-lifecycle-runtime-release-13 C:\Users\sonya\.gradle\caches\transforms-4\673b96fd4059b52cbfd1a8e2e04b16ef\transformed\lifecycle-runtime-release\res
+com.example.myapplication.test.app-lifecycle-runtime-ktx-release-14 C:\Users\sonya\.gradle\caches\transforms-4\6bd32d19416b74e1304b419ad7d21279\transformed\lifecycle-runtime-ktx-release\res
+com.example.myapplication.test.app-lifecycle-viewmodel-ktx-2.8.0-15 C:\Users\sonya\.gradle\caches\transforms-4\6e38b34ca62a5cccfcb81d0261b1a814\transformed\lifecycle-viewmodel-ktx-2.8.0\res
+com.example.myapplication.test.app-activity-compose-1.9.0-16 C:\Users\sonya\.gradle\caches\transforms-4\7ea632dcf85f2df5d86f1562e720f566\transformed\activity-compose-1.9.0\res
+com.example.myapplication.test.app-runtime-release-17 C:\Users\sonya\.gradle\caches\transforms-4\8192c76f3717b6594f5976092177e917\transformed\runtime-release\res
+com.example.myapplication.test.app-lifecycle-process-2.8.0-18 C:\Users\sonya\.gradle\caches\transforms-4\84874d20b6c10bf4dcce07e5b5a198b2\transformed\lifecycle-process-2.8.0\res
+com.example.myapplication.test.app-lifecycle-livedata-core-2.8.0-19 C:\Users\sonya\.gradle\caches\transforms-4\85e9b87caea0c1569c293f3bf5d3ac1b\transformed\lifecycle-livedata-core-2.8.0\res
+com.example.myapplication.test.app-savedstate-1.2.1-20 C:\Users\sonya\.gradle\caches\transforms-4\8909b8294d0ebc83c0a55152d7da36e0\transformed\savedstate-1.2.1\res
+com.example.myapplication.test.app-runtime-saveable-release-21 C:\Users\sonya\.gradle\caches\transforms-4\91d56f5ce3e98f1fcad0a346e0b2aabe\transformed\runtime-saveable-release\res
+com.example.myapplication.test.app-annotation-experimental-1.4.0-22 C:\Users\sonya\.gradle\caches\transforms-4\98c2f12a517c78911b3c44c62f1ee465\transformed\annotation-experimental-1.4.0\res
+com.example.myapplication.test.app-ui-test-release-23 C:\Users\sonya\.gradle\caches\transforms-4\9aac794fa4379c153ad7b328882fd601\transformed\ui-test-release\res
+com.example.myapplication.test.app-lifecycle-viewmodel-release-24 C:\Users\sonya\.gradle\caches\transforms-4\a9fc7a34db13d81f99012e9b75526ed0\transformed\lifecycle-viewmodel-release\res
+com.example.myapplication.test.app-customview-poolingcontainer-1.0.0-25 C:\Users\sonya\.gradle\caches\transforms-4\b336e81a19cb6f56969968113ba1771c\transformed\customview-poolingcontainer-1.0.0\res
+com.example.myapplication.test.app-ui-release-26 C:\Users\sonya\.gradle\caches\transforms-4\b75c2ad2c3f30c2cb3313d4743dbd3d9\transformed\ui-release\res
+com.example.myapplication.test.app-core-1.5.0-27 C:\Users\sonya\.gradle\caches\transforms-4\b75cc255de0f74401ec77b2ce5292587\transformed\core-1.5.0\res
+com.example.myapplication.test.app-ui-util-release-28 C:\Users\sonya\.gradle\caches\transforms-4\b8703727689e201b6e4ed7345accdf60\transformed\ui-util-release\res
+com.example.myapplication.test.app-ui-text-release-29 C:\Users\sonya\.gradle\caches\transforms-4\d926c2533c687d4a7b2ec052871045c9\transformed\ui-text-release\res
+com.example.myapplication.test.app-activity-1.9.0-30 C:\Users\sonya\.gradle\caches\transforms-4\e87c6df1d5adcbd2d6eedcc7fa018fbb\transformed\activity-1.9.0\res
+com.example.myapplication.test.app-androidTest-31 E:\AndroidStudioProjects\1. gitstart\MyApplication\app\build\generated\res\resValues\androidTest\debug
+com.example.myapplication.test.app-mergeDebugAndroidTestResources-32 E:\AndroidStudioProjects\1. gitstart\MyApplication\app\build\intermediates\incremental\debugAndroidTest\mergeDebugAndroidTestResources\merged.dir
+com.example.myapplication.test.app-mergeDebugAndroidTestResources-33 E:\AndroidStudioProjects\1. gitstart\MyApplication\app\build\intermediates\incremental\debugAndroidTest\mergeDebugAndroidTestResources\stripped.dir
+com.example.myapplication.test.app-debugAndroidTest-34 E:\AndroidStudioProjects\1. gitstart\MyApplication\app\build\intermediates\merged_res\debugAndroidTest\mergeDebugAndroidTestResources
