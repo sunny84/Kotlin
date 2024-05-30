@@ -1,16 +1,37 @@
+@file:OptIn(ExperimentalMaterial3Api::class)
+
 package com.example.myapplication
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import com.example.myapplication.ui.theme.MyApplicationTheme
 
 class MainActivity : ComponentActivity() {
@@ -18,30 +39,111 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            MyApplicationTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
-            }
+            //MyApp {
+                MainContent()
+            //}
         }
     }
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
+fun MyApp(content: @Composable () -> Unit) {
+    // 2022.2.17 Code
+    MyApplicationTheme {
+        Scaffold ( topBar = {
+            TopAppBar(
+                title = { Text(text = "Title text") },
+                navigationIcon = {
+                    Icon(
+                        imageVector = Icons.Default.ArrowBack,
+                        contentDescription = "Back"
+                    )
+                },
+                actions = {
+                    Icon(
+                        imageVector = Icons.Default.Favorite,
+                        contentDescription = "Favorite"
+                    )
+                    Icon(
+                        imageVector = Icons.Default.Search,
+                        contentDescription = "Search"
+                    )
+                }
+            )
+            }, bottomBar = {
+                BottomAppBar(
+                    content = {
+                        Icon(imageVector = Icons.Default.Menu, contentDescription = "Menu")
+                        Icon(imageVector = Icons.Default.Search, contentDescription = "Search")
+                        Text(text = "BottomAppBar!")
+                    }
+                )
+            }, floatingActionButton = {
+                FloatingActionButton(
+                    onClick = { /*TODO*/ },
+                    content = {
+                        Icon(imageVector = Icons.Default.Favorite, contentDescription = "Favorite")
+                    }
+                )
+// M2 Scaffold의 모든 drawer* 매개변수가 M3 Scaffold에서 삭제되었습니다.
+//            }, drawerContent = {
+//                Icon(
+//                    modifier = Modifier.padding(14.dp),
+//                    imageVector = Icons.Default.Person,
+//                    contentDescription = "Person"
+//                )
+//                Text(modifier = Modifier.padding(14.dp), text = "James")
+//                Text(modifier = Modifier.padding(14.dp), text = "Sam")
+//                Text(modifier = Modifier.padding(14.dp), text = "Jon")
+        }
+        ) {
+            content()
+        }
+    }
 }
 
-@Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
+fun MainContent() {
+    Surface(color = MaterialTheme.colorScheme.background) {
+        Column (
+            modifier = Modifier
+                .fillMaxSize()
+                .background(color = Color.Blue)
+                .padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Spacer(modifier = Modifier.width(24.dp))
+            Text(text = "Hello")
+            Text(text = "World")
+        }
+    }
+}
+
+@Composable
+fun MyApplication() {
     MyApplicationTheme {
-        Greeting("Android")
+        // Surface
+        // 주로 단일 요소의 배경 모양, 색, 테두리 등을 설정하는 Composable이다.
+        // Surface를 사용해야 하는 이유는 코드를 더욱 쉽게 만들고, Material Surface를 사용함을 명시적으로 나타낸다.
+
+        // Scaffold
+        // 앱의 기본적인 레이아웃 구조를 정의하고 다양한 UI 구성 요소를 통합하는 데 사용된다.
+        // 일반적으로 앱의 최상위 컨테이너 역할을 하고 다음과 같은 주요 구성 요소로 구성될 수 있다.
+        // TopAppBar, BottomAppBar, FloatingActionButton, Drawer, Content
+        // Scaffold를 사용하면 위의 구성 요소를 조합하여 앱의 기본 레이아웃을 구성하고, 표준화된 Material Design 스타일을 적용할 수 있다.
+
+        // Modifier
+        // Compose의 수정자인 Modifier는 Composable를 꾸미거나 더욱 강조한다.
+
+        Surface() {
+            Column(
+                modifier = Modifier
+                    .background(color = Color.Blue)
+                    .padding(16.dp)
+            ) {
+                Text("Hello")
+                Text("World")
+            }
+        }
     }
 }
