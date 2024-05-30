@@ -6,7 +6,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -17,25 +16,23 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 
 class MainActivity : ComponentActivity() {
-    private val viewModel by viewModels<MainViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
+            val viewModel = viewModel<MainViewModel>()
             Column (
                 modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.Center,
@@ -46,7 +43,7 @@ class MainActivity : ComponentActivity() {
                     fontSize = 30.sp,
                 )
                 Button(onClick = {
-                    viewModel.data.value = "World"
+                    viewModel.changeValue()
                 }) {
                     Text("변경")
                 }
@@ -56,7 +53,12 @@ class MainActivity : ComponentActivity() {
 }
 
 class MainViewModel : ViewModel(){
-    val data = mutableStateOf("Hello")
+    private val _data = mutableStateOf("Hello")
+    val data: State<String> = _data
+
+    fun changeValue() {
+        _data.value = "World"
+    }
 }
 @Composable
 fun FirstScreen(navController: NavController) {
