@@ -7,11 +7,13 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Favorite
@@ -19,28 +21,68 @@ import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.BottomSheetScaffold
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import com.example.myapplication.ui.theme.MyApplicationTheme
+import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalComposeUiApi::class)
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
+            // 구조분해
+            val (text, setValue) = remember {
+                mutableStateOf("")
+            }
+            // M2 ScaffoldState 클래스는 더 이상 필요하지 않은 drawerState 매개변수를 포함하므로 더 이상 M3에 없습니다.
+            // M3 Scaffold로 스낵바를 표시하려면 대신 SnackbarHostState를 사용합니다.
+            val snackbarHostState = remember { SnackbarHostState() }
+            val scope = rememberCoroutineScope()
+            val keyboardController = LocalSoftwareKeyboardController.current
+
+            Scaffold(
+                snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
+                content = {
+                    Column(
+                        modifier = Modifier.fillMaxSize(),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                    ) {
+                        TextField(value = text, onValueChange = setValue)
+                        Button(onClick = {
+                            keyboardController?.hide()
+                            scope.launch { snackbarHostState.showSnackbar("Hello $text") }
+                        }) {
+                            Text("클릭!!")
+                        }
+                    }
+                }
+            )
             //MyApp {
-                MainContent()
+//                MainContent()
             //}
         }
     }
@@ -79,12 +121,12 @@ fun MyApp(content: @Composable () -> Unit) {
                     }
                 )
             }, floatingActionButton = {
-                FloatingActionButton(
-                    onClick = { /*TODO*/ },
-                    content = {
-                        Icon(imageVector = Icons.Default.Favorite, contentDescription = "Favorite")
-                    }
-                )
+            FloatingActionButton(
+                onClick = { /*TODO*/ },
+                content = {
+                    Icon(imageVector = Icons.Default.Favorite, contentDescription = "Favorite")
+                }
+            )
 // M2 Scaffold의 모든 drawer* 매개변수가 M3 Scaffold에서 삭제되었습니다.
 //            }, drawerContent = {
 //                Icon(
@@ -95,10 +137,11 @@ fun MyApp(content: @Composable () -> Unit) {
 //                Text(modifier = Modifier.padding(14.dp), text = "James")
 //                Text(modifier = Modifier.padding(14.dp), text = "Sam")
 //                Text(modifier = Modifier.padding(14.dp), text = "Jon")
-        }
-        ) {
-            content()
-        }
+            },
+            content = {
+                LazyColumn {}
+            }
+        )
     }
 }
 
