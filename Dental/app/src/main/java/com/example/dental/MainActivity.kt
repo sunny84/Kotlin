@@ -35,15 +35,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 
 class MainActivity : ComponentActivity() {
     companion object {
@@ -57,6 +57,7 @@ class MainActivity : ComponentActivity() {
 
             var imageUri by remember { mutableStateOf<Uri?>(null) }
             var imageBitmap by remember { mutableStateOf<Bitmap?>(null) }
+            var savedImageUri by remember { mutableStateOf<Uri?>(null) }
 
             val context = LocalContext.current
 
@@ -72,7 +73,11 @@ class MainActivity : ComponentActivity() {
                 onBrighten = { imageBitmap = adjustBrightness(imageBitmap, 1.2f) },
                 onDarken = { imageBitmap = adjustBrightness(imageBitmap, 0.8f) },
                 onZoomIn = { imageBitmap = zoomImage(imageBitmap, 1.2f) },
-                onZoomOut = { imageBitmap = zoomImage(imageBitmap, 0.8f) }
+                onZoomOut = { imageBitmap = zoomImage(imageBitmap, 0.8f) },
+                onSaveImage = { savedImageUri = saveImage(context, imageBitmap) },
+                onReloadImage = {
+                    imageBitmap = savedImageUri?.toBitmap(context)
+                }
             )
 
             val launcher = rememberLauncherForActivityResult(
@@ -131,7 +136,9 @@ fun SelectImage(
     onBrighten: () -> Unit,
     onDarken: () -> Unit,
     onZoomIn: () -> Unit,
-    onZoomOut: () -> Unit
+    onZoomOut: () -> Unit,
+    onSaveImage: () -> Unit,
+    onReloadImage: () -> Unit
 ) {
     val context = LocalContext.current
     val launcher = rememberLauncherForActivityResult(
@@ -144,40 +151,60 @@ fun SelectImage(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        // Image display area
-        imageBitmap?.let { bitmap ->
-            Image(bitmap = bitmap.asImageBitmap(), contentDescription = null)
+
+        Row(){
+            // Image selection button
+            Button(onClick = { launcher.launch("image/*") }) {
+                Text("Select Image")
+            }
+            Spacer(modifier = Modifier.width(8.dp))
+            Button(onClick = onSaveImage) {
+                Text("Save Image")
+            }
+            Spacer(modifier = Modifier.width(8.dp))
+            Button(onClick = onReloadImage) {
+                Text("Reload Saved Image")
+            }
         }
 
-        // Image selection button
-        Button(onClick = { launcher.launch("image/*") }) {
-            Text("Select Image")
-        }
-
-        // Image manipulation buttons
-        Row(modifier = Modifier.padding(top = 16.dp)) {
-            Button(onClick = onCrop) {
-                Text("Crop")
+        Row(
+        ) {
+            // Image display area
+            imageBitmap?.let { bitmap ->
+                Image(bitmap = bitmap.asImageBitmap(), contentDescription = null)
             }
-            Spacer(modifier = Modifier.width(8.dp))
-            Button(onClick = onGrayscale) {
-                Text("Grayscale")
-            }
-            Spacer(modifier = Modifier.width(8.dp))
-            Button(onClick = onBrighten) {
-                Text("Brighten")
-            }
-            Spacer(modifier = Modifier.width(8.dp))
-            Button(onClick = onDarken) {
-                Text("Darken")
-            }
-            Spacer(modifier = Modifier.width(8.dp))
-            Button(onClick = onZoomIn) {
-                Text("Zoom In")
-            }
-            Spacer(modifier = Modifier.width(8.dp))
-            Button(onClick = onZoomOut) {
-                Text("Zoom Out")
+            Spacer(modifier = Modifier.width(16.dp))
+            Column(
+                
+            ) {
+                // Image manipulation buttons
+                Row(modifier = Modifier.padding(top = 16.dp)) {
+                    Button(onClick = onCrop) {
+                        Text("Crop")
+                    }
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Button(onClick = onGrayscale) {
+                        Text("Grayscale")
+                    }
+                }
+                Row(modifier = Modifier.padding(top = 16.dp)) {
+                    Button(onClick = onBrighten) {
+                        Text("Brighten")
+                    }
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Button(onClick = onDarken) {
+                        Text("Darken")
+                    }
+                }
+                Row(modifier = Modifier.padding(top = 16.dp)) {
+                    Button(onClick = onZoomIn) {
+                        Text("Zoom In")
+                    }
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Button(onClick = onZoomOut) {
+                        Text("Zoom Out")
+                    }
+                }
             }
         }
     }
@@ -262,6 +289,25 @@ private fun zoomImage(bitmap: Bitmap?, factor: Float): Bitmap? {
         Bitmap.createScaledBitmap(bitmap, width, height, true)
     } catch (e: Exception) {
         e.printStackTrace()
+        null
+    }
+}
+
+private fun saveImage(context: Context, bitmap: Bitmap?): Uri? {
+    if(bitmap == null) return null
+
+    val filename = "edited_image.png"
+    val file = File(context.cacheDir, filename)
+    return try {
+        FileOutputStream(file).use { out ->
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out)
+        }
+        FileProvider.getUriForFile(context, "${context.packageName}.file-provider", file)
+        // You can use the saveUri to share the image or open it in another app
+        //Log.d("SaveImage", "Image saved: $savedUri")
+    } catch (e: IOException) {
+        e.printStackTrace()
+        Log.e("SaveImage", "Error saving image: ${e.message}")
         null
     }
 }
