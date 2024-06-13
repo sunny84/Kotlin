@@ -18,12 +18,15 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
@@ -35,12 +38,19 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -54,31 +64,36 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-
+            var navController = rememberNavController()
             var imageUri by remember { mutableStateOf<Uri?>(null) }
             var imageBitmap by remember { mutableStateOf<Bitmap?>(null) }
             var savedImageUri by remember { mutableStateOf<Uri?>(null) }
 
             val context = LocalContext.current
-
-            SelectImage(
-                imageUri = imageUri,
-                imageBitmap = imageBitmap,
-                onImageSelected = { uri ->
-                    imageUri = uri
-                    imageBitmap = uri?.toBitmap(context)
-                },
-                onCrop = { imageBitmap = cropImage(imageBitmap) },
-                onGrayscale = { imageBitmap = grayscaleImage(imageBitmap) },
-                onBrighten = { imageBitmap = adjustBrightness(imageBitmap, 1.2f) },
-                onDarken = { imageBitmap = adjustBrightness(imageBitmap, 0.8f) },
-                onZoomIn = { imageBitmap = zoomImage(imageBitmap, 1.2f) },
-                onZoomOut = { imageBitmap = zoomImage(imageBitmap, 0.8f) },
-                onSaveImage = { savedImageUri = saveImage(context, imageBitmap) },
-                onReloadImage = {
-                    imageBitmap = savedImageUri?.toBitmap(context)
+            NavHost(navController = navController, startDestination = "main") {
+                composable("main") {
+                    SelectImageScreen(
+                        imageUri = imageUri,
+                        imageBitmap = imageBitmap,
+                        onImageSelected = { uri ->
+                            imageUri = uri
+                            imageBitmap = uri?.toBitmap(context)
+                        },
+                        onCrop = { imageBitmap = cropImage(imageBitmap) },
+                        onGrayscale = { imageBitmap = grayscaleImage(imageBitmap) },
+                        onBrighten = { imageBitmap = adjustBrightness(imageBitmap, 1.2f) },
+                        onDarken = { imageBitmap = adjustBrightness(imageBitmap, 0.8f) },
+                        onZoomIn = { imageBitmap = zoomImage(imageBitmap, 1.2f) },
+                        onZoomOut = { imageBitmap = zoomImage(imageBitmap, 0.8f) },
+                        onSaveImage = { savedImageUri = saveImage(context, imageBitmap) },
+                        onReloadImage = { imageBitmap = savedImageUri?.toBitmap(context) },
+                        onDrawGraph = { navController.navigate("graph") }
+                    )
                 }
-            )
+                composable("graph") {
+                    GraphScreen(imageBitmap = imageBitmap)
+                }
+            }
 
             val launcher = rememberLauncherForActivityResult(
                 contract = ActivityResultContracts.GetContent(),
@@ -127,7 +142,7 @@ class MainActivity : ComponentActivity() {
 //    }
 }
 @Composable
-fun SelectImage(
+fun SelectImageScreen(
     imageUri: Uri?,
     imageBitmap: Bitmap?,
     onImageSelected: (Uri?) -> Unit,
@@ -138,7 +153,8 @@ fun SelectImage(
     onZoomIn: () -> Unit,
     onZoomOut: () -> Unit,
     onSaveImage: () -> Unit,
-    onReloadImage: () -> Unit
+    onReloadImage: () -> Unit,
+    onDrawGraph: () -> Unit
 ) {
     val context = LocalContext.current
     val launcher = rememberLauncherForActivityResult(
@@ -164,6 +180,10 @@ fun SelectImage(
             Spacer(modifier = Modifier.width(8.dp))
             Button(onClick = onReloadImage) {
                 Text("Reload Saved Image")
+            }
+            Spacer(modifier = Modifier.width(8.dp))
+            Button(onClick = onDrawGraph) {
+                Text("Draw Graph")
             }
         }
 
@@ -207,6 +227,56 @@ fun SelectImage(
                 }
             }
         }
+    }
+}
+@Composable
+fun GraphScreen(imageBitmap: Bitmap?) {
+    Row(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.White),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceAround
+    ) {
+        imageBitmap?.let {
+            Image(bitmap = it.asImageBitmap(), contentDescription = null)
+        }
+
+        Canvas(modifier = Modifier
+            .width(300.dp)
+            .height(300.dp)
+        ) {
+            drawGraph(imageBitmap)
+        }
+    }
+}
+
+private fun DrawScope.drawGraph(bitmap: Bitmap?) {
+    bitmap ?: return
+
+    val pixelValues = IntArray(256)
+    for (x in 0 until bitmap.width) {
+        for (y in 0 until bitmap.height) {
+            val pixel = bitmap.getPixel(x, y)
+            val brightness = (
+                    0.299 * android.graphics.Color.red(pixel) +
+                    0.587 * android.graphics.Color.green(pixel) +
+                    0.114 * android.graphics.Color.blue(pixel)).toInt()
+            pixelValues[brightness]++
+        }
+    }
+
+    val maxPixelValue = pixelValues.maxOrNull() ?: 1
+    val scaleX = size.width / 256
+    val scaleY = size.height / maxPixelValue
+
+    for (i in pixelValues.indices) {
+        val barHeight = pixelValues[i] * scaleY
+        drawRect(
+            color = Color.Black,
+            topLeft = Offset(i * scaleX, size.height - barHeight),
+            size = Size(scaleX, barHeight)
+        )
     }
 }
 
