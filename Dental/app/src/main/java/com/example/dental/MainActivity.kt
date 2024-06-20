@@ -43,6 +43,7 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.drawscope.DrawScope
+import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.app.ActivityCompat
@@ -277,6 +278,49 @@ private fun DrawScope.drawGraph(bitmap: Bitmap?) {
             topLeft = Offset(i * scaleX, size.height - barHeight),
             size = Size(scaleX, barHeight)
         )
+    }
+
+    // Draw x-axis values
+    for (i in 0..255 step 32) {
+        drawContext.canvas.nativeCanvas.apply {
+            drawText(
+                i.toString(),
+                i * scaleX,
+                size.height - 10,
+                android.graphics.Paint().apply {
+                    color = android.graphics.Color.BLACK
+                    textSize = 20f
+                    textAlign = android.graphics.Paint.Align.CENTER
+                }
+            )
+        }
+    }
+
+    // Draw y-axis values
+    val numberOfYLabels = 5
+    for (i in 0..numberOfYLabels) {
+        val yValue = (maxPixelValue / numberOfYLabels) * i
+        val yPos = size.height - (yValue * scaleY)
+
+        drawLine(
+            start = androidx.compose.ui.geometry.Offset(0f, yPos),
+            end = androidx.compose.ui.geometry.Offset(size.width, yPos),
+            color = Color.Gray,
+            strokeWidth = 1f
+        )
+
+        drawContext.canvas.nativeCanvas.apply {
+            drawText(
+                yValue.toString(),
+                10f,
+                yPos,
+                android.graphics.Paint().apply {
+                    color = android.graphics.Color.BLACK
+                    textSize = 20f
+                    textAlign = android.graphics.Paint.Align.RIGHT
+                }
+            )
+        }
     }
 }
 
